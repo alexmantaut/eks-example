@@ -109,3 +109,15 @@ resource "aws_eks_addon" "ebs-csi" {
     "terraform" = "true"
   }
 }
+
+resource "aws_ecr_repository" "hello-world-repo" {
+  name = "hello-world-repo" # Naming my repository
+}
+
+resource "aws_lb_target_group" "target_group" {
+  name        = "target-group"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = "${aws_default_vpc.default_vpc.id}" # Referencing the default VPC
+}
