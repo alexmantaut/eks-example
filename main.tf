@@ -8,7 +8,7 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 locals {
-  cluster_name = "education-eks-${random_string.suffix.result}"
+  cluster_name = "education-eks"
 }
 
 resource "random_string" "suffix" {
@@ -56,7 +56,6 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
-
   }
 
   eks_managed_node_groups = {
@@ -110,14 +109,6 @@ resource "aws_eks_addon" "ebs-csi" {
   }
 }
 
-resource "aws_ecr_repository" "hello-world-repo" {
-  name = "hello-world-repo" # Naming my repository
-}
-
-resource "aws_lb_target_group" "target_group" {
-  name        = "target-group"
-  port        = 80
-  protocol    = "HTTP"
-  target_type = "ip"
-  vpc_id      = "${aws_default_vpc.default_vpc.id}" # Referencing the default VPC
+resource "aws_ecr_repository" "hello-world-image" {
+  name = "hello-world-image"
 }
