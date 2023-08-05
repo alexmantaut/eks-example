@@ -20,3 +20,7 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = module.eks.cluster_name
 }
+
+output "load_balancer_hostname" {
+  value = kubernetes_service.node.status.0.load_balancer.0.ingress.0.hostname
+}
